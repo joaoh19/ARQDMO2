@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "475901852239",
+    "project_id": "redesocialjoaohenrique19",
+    "storage_bucket": "redesocialjoaohenrique19.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475901852239:android:599a779eb846acc7c2483a",
+        "android_client_info": {
+          "package_name": "com.jh.redesocial"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEm38dEKMmQ_DrssjWAsNaZX7zgBKIPpQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
