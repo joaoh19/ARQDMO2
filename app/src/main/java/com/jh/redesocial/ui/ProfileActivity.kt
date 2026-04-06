@@ -1,4 +1,4 @@
-package com.jh.redesocial
+package com.jh.redesocial.ui
 
 import android.content.Intent
 import android.os.Bundle

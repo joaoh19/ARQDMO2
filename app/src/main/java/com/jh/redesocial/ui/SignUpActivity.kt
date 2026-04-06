@@ -1,11 +1,10 @@
-package com.jh.redesocial
+package com.jh.redesocial.ui
 
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
-import com.jh.redesocial.HomeActivity
 import com.jh.redesocial.databinding.ActivitySignUpBinding
 
 

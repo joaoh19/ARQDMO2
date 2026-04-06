@@ -1,4 +1,4 @@
-package com.jh.redesocial
+package com.jh.redesocial.util
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
