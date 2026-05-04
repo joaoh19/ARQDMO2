@@ -4,12 +4,11 @@
 
 ## 🎬 Demonstração em Tempo Real
 
-<div align="center">
+
   
-  <video https://github.com/user-attachments/assets/3bde7501-7773-4486-9e73-c3d3f494d5e6>
+  <div align "center" https://github.com/user-attachments/assets/3bde7501-7773-4486-9e73-c3d3f494d5e6>
    
-  </video>
-</div>
+
 
 
 
