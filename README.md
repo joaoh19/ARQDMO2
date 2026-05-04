@@ -3,12 +3,11 @@
 
 
 ## 🎬 Demonstração em Tempo Real
-<div align="center">
-  <!-- Substitua o link abaixo pelo link direto do seu vídeo no GitHub -->
-  <video src="https://github.com/joaoh19/ARQDMO2/blob/main/media/mostrar_app.mp4" width="300" autoplay loop muted playsinline>
-    O seu navegador não suporta a exibição de vídeos.
-  </video>
-</div>
+
+
+https://github.com/user-attachments/assets/3bde7501-7773-4486-9e73-c3d3f494d5e6
+
+
 
 
 ## 📝 Descrição
