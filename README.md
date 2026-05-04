@@ -5,10 +5,9 @@
 ## 🎬 Demonstração em Tempo Real
 
 
-  
-  <div align = "center" https://github.com/user-attachments/assets/3bde7501-7773-4486-9e73-c3d3f494d5e6>
-  </div>
-   
+
+https://github.com/user-attachments/assets/e4e67f7d-071a-4940-a2e4-90d200c82a4d
+
 
 
 
