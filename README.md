@@ -5,7 +5,7 @@
 ## 🎬 Demonstração em Tempo Real
 <div align="center">
   <!-- Substitua o link abaixo pelo link direto do seu vídeo no GitHub -->
-  <video src="media/mostrar_app.mp4" width="300" autoplay loop muted playsinline>
+  <video src="https://github.com/joaoh19/ARQDMO2/blob/main/media/mostrar_app.mp4" width="300" autoplay loop muted playsinline>
     O seu navegador não suporta a exibição de vídeos.
   </video>
 </div>
