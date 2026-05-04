@@ -7,15 +7,19 @@
     android:layout_height="match_parent"
     tools:context=".ui.HomeActivity">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/imgLogo"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_margin="16dp"
+        android:padding="2dp"
+        android:scaleType="centerCrop"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
-        android:scaleType="centerCrop"
+        app:strokeWidth="2dp"
+        app:strokeColor="@android:color/darker_gray"
+        app:shapeAppearanceOverlay="@style/CircleImage"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:src="@tools:sample/avatars" />

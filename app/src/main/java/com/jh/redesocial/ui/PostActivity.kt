@@ -13,13 +13,14 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jh.redesocial.databinding.ActivityPostBinding
 import com.jh.redesocial.util.Base64Converter
-import com.jh.redesocial.util.LocalizadorHelper
+import com.jh.redesocial.util.LocalizadorHelper // Certifique-se que o pacote está correto
 
 class PostActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityPostBinding.inflate(layoutInflater) }
     private val db by lazy { FirebaseFirestore.getInstance() }
     private var cidadeDetectada: String = ""
+    private val LOCATION_PERMISSION_CODE = 1001 // Baseado no exemplo do PDF [cite: 351]
 
     private val galeria = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
         if (uri != null) {
@@ -31,8 +32,10 @@ class PostActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        // Tenta obter a cidade assim que abre a tela
-        obterLocalizacao()
+        // Clique para adicionar localização de forma ativa
+        binding.btnAdicionarLocalizacao.setOnClickListener {
+            solicitarLocalizacao()
+        }
 
         binding.btnSelecionarImagem.setOnClickListener {
             galeria.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
@@ -43,24 +46,53 @@ class PostActivity : AppCompatActivity() {
         }
     }
 
-    private fun obterLocalizacao() {
+    private fun solicitarLocalizacao() {
+        // Verifica permissões em tempo de execução [cite: 320, 360, 444]
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 100)
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
+                LOCATION_PERMISSION_CODE
+            )
             return
         }
 
+        // Feedback visual de carregamento
+        binding.txtLocalizacaoPost.text = "Buscando localização..."
+
+        // Instancia o Helper baseado no seu arquivo de exemplo
         val helper = LocalizadorHelper(this)
         helper.obterLocalizacaoAtual(object : LocalizadorHelper.Callback {
             override fun onLocalizacaoRecebida(endereco: Address, latitude: Double, longitude: Double) {
-                cidadeDetectada = endereco.locality ?: endereco.subAdminArea ?: ""
-                if (cidadeDetectada.isNotEmpty()) {
-                    Toast.makeText(this@PostActivity, "Localizado em: $cidadeDetectada", Toast.LENGTH_SHORT).show()
+                // Atualização obrigatória na Thread Principal (UI Thread) [cite: 448, 459]
+                runOnUiThread {
+                    // Extrai cidade e estado conforme lógica de endereço [cite: 573, 577]
+                    val cidade = endereco.locality ?: ""
+                    val estado = endereco.adminArea ?: ""
+
+                    cidadeDetectada = if (cidade.isNotEmpty()) "$cidade, $estado" else estado
+
+                    // Atualiza o texto do botão com o local encontrado
+                    binding.txtLocalizacaoPost.text = cidadeDetectada
+                    binding.txtLocalizacaoPost.setTextColor(android.graphics.Color.BLACK)
                 }
             }
+
             override fun onErro(mensagem: String) {
-                cidadeDetectada = ""
+                runOnUiThread {
+                    binding.txtLocalizacaoPost.text = "Toque para tentar novamente"
+                    Toast.makeText(this@PostActivity, "Erro: $mensagem", Toast.LENGTH_SHORT).show()
+                }
             }
         })
+    }
+
+    // Gerencia o resultado do pedido de permissão [cite: 389, 462]
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_PERMISSION_CODE && grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            solicitarLocalizacao()
+        }
     }
 
     private fun publicarPost() {
@@ -73,22 +105,21 @@ class PostActivity : AppCompatActivity() {
 
         val imageString = Base64Converter.drawableToString(binding.imgPostPreview.drawable)
 
-        // Criando o objeto post com o campo "cidade"
+        // Cria o objeto para o Firestore incluindo o campo "cidade"
         val post = hashMapOf(
             "descricao" to descricao,
             "imageString" to imageString,
-            "cidade" to cidadeDetectada, // IMPORTANTE: Para o filtro da Home funcionar
+            "cidade" to cidadeDetectada,
             "data" to Timestamp.now()
         )
 
-        db.collection("posts")
-            .add(post)
+        db.collection("posts").add(post)
             .addOnSuccessListener {
                 Toast.makeText(this, "Postado com sucesso!", Toast.LENGTH_SHORT).show()
                 finish()
             }
             .addOnFailureListener { e ->
-                Toast.makeText(this, "Erro: ${e.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Erro ao publicar: ${e.message}", Toast.LENGTH_SHORT).show()
             }
     }
 }
