@@ -23,7 +23,7 @@ Uma rede social dinâmica desenvolvida para conectar usuários, permitindo o com
 ## 🎥 Demonstração
 Para visualizar o funcionamento do aplicativo, assista ao vídeo abaixo (vídeo de 5 a 10min):
 
-[![Assista no YouTube](https://img.youtube.com/vi/SEU_ID_DO_VIDEO/0.jpg)](https://youtu.be/SEU_ID_DO_VIDEO)
+[![Assista no YouTube](https://img.youtube.com/vi/SEU_ID_DO_VIDEO/0.jpg)](https://youtu.be/6pCvg9pzIqA)
 
 ## 🛠️ Tecnologias Utilizadas
 **Linguagem**: Kotlin 
